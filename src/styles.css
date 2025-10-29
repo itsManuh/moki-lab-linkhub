@@ -1,0 +1,297 @@
+/* Reset mínimo */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html, body, #root { height: 100%; }
+body { line-height: 1.5; -webkit-font-smoothing: antialiased; }
+img, picture, video, canvas, svg { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; }
+
+/* =========================
+   Tokens (Dark por defecto)
+   ========================= */
+:root {
+  /* 🎨 Paleta base */
+  --brand: #7E56C7;        /* morado pastel (primario) */
+  --accent-blue: #A7D3F7;  /* azul cielo pastel */
+  --accent-pink: #EFB3E0;  /* rosa pastel */
+  --bg: #232029;           /* fondo oscuro */
+
+  /* 🌈 Derivados UI */
+  --surface: #2b2633;
+  --text: #F3F5F7;
+  --muted: #BEB7C9;
+  --brand-contrast: #2a2140;
+  --ring: color-mix(in oklab, var(--brand) 60%, transparent);
+  --radius: 18px;
+  --shadow: 0 10px 30px rgba(0,0,0,.25);
+  --maxw: 720px;
+  
+  --font: "Baloo 2", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+
+  /* 🌈 Icons Colors */
+  --ig-bg: #f7c2e8;   /* rosa pastel */
+  --wa-bg: #b3f2cb;   /* verde pastel */
+  --fb-bg: #a7c8ff;   /* azul rey pastel */
+  --tk-bg: #c9b3ff;   /* morado pastel fuerte */
+
+  /* 🐶 Avatar */
+  --avatar-size: 148px;     /* tamaño del contenedor */
+  --avatar-img-scale: .92;  /* imagen más chica que el contenedor */
+  --avatar-bg-inset: 14%;   /* círculo de atrás más pequeño (más orejas fuera) */
+  --avatar-shiftY: -6px;    /* sube un poco la cara */
+}
+
+/* ================
+   Tokens (Light)
+   ================ */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #F7F8FC;
+    --surface: #FFFFFF;
+    --text: #1F1C25;
+    --muted: #6E6A75;
+    --brand: #7E56C7;
+    --brand-contrast: #F2ECFF;
+    --ring: color-mix(in oklab, var(--brand) 55%, transparent);
+  }
+}
+
+/* ======
+   Base
+   ====== */
+body {
+  font-family: var(--font);
+  background:
+    radial-gradient(720px 380px at 20% -10%, color-mix(in oklab, var(--accent-pink) 18%, transparent) 0%, transparent 70%),
+    radial-gradient(820px 460px at 80% -10%, color-mix(in oklab, var(--accent-blue) 22%, transparent) 0%, transparent 70%),
+    var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;  /* Los elementos se apilan verticalmente */
+  justify-content: flex-start;  /* Asegura que el contenido se alinee desde el inicio */
+  height: 100vh;  /* Ocupa todo el alto de la pantalla */
+  padding: 32px;
+  margin: 0;
+  align-items: center;  /* Centra todo horizontalmente */
+}
+
+.container {
+  max-width: 900px;  /* Limita el ancho máximo */
+  width: 100%;  /* Asegura que el contenedor ocupe el 100% del espacio disponible */
+  margin-top: 0;  /* Quita márgenes extra */
+}
+.header { display: grid; place-items: center; gap: 10px; padding-bottom: 20px; }
+
+.title { 
+  font-family: var(--font); 
+  font-size: clamp(22px, 3.6vw, 30px); 
+  font-weight: 800; 
+  letter-spacing: .2px; 
+}
+.subtitle {
+  color: color-mix(in oklab, var(--muted), white 10%);
+  font-size: 14px;
+  line-height: 1.3;
+  margin: 2px 0;
+  text-align: center;
+  font-family: var(--font);
+}
+
+/* =========================
+   Avatar con glow animado
+   ========================= */
+@keyframes avatarGlow {
+  0%   { box-shadow: 0 0 26px color-mix(in oklab, var(--brand) 55%, transparent); }
+  50%  { box-shadow: 0 0 44px color-mix(in oklab, var(--accent-pink) 70%, transparent); }
+  100% { box-shadow: 0 0 26px color-mix(in oklab, var(--brand) 55%, transparent); }
+}
+
+@keyframes auraPulse {
+  0%,100% { transform: scale(0.98); }
+  50%     { transform: scale(1.06); }  /* el círculo respira */
+}
+
+.avatar-wrap{
+  position: relative;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  display: grid;
+  place-items: center;
+  margin-bottom: 12px;
+}
+
+/* Círculo “de fondo” con respiración */
+.avatar-wrap::before{
+  content:"";
+  position:absolute;
+  inset: var(--avatar-bg-inset);           /* círculo más pequeño para que se vea el halo */
+  border-radius: 50%;
+  background:
+    radial-gradient(60% 60% at 30% 20%, color-mix(in oklab, var(--accent-pink) 28%, transparent), transparent 70%),
+    radial-gradient(70% 70% at 70% 20%, color-mix(in oklab, var(--accent-blue) 30%, transparent), transparent 75%),
+    color-mix(in oklab, var(--brand-contrast), black 5%);
+  animation: avatarGlow 4s ease-in-out infinite, auraPulse 4s ease-in-out infinite;
+  z-index: 0;
+  will-change: transform, box-shadow;
+}
+
+/* Imagen real (más pequeña que el wrapper, orejas visibles) */
+.avatar-img{
+  position: relative;
+  z-index: 1;
+  width: calc(var(--avatar-size) * var(--avatar-img-scale));
+  height: calc(var(--avatar-size) * var(--avatar-img-scale));
+  object-fit: contain;               /* evita recortes */
+  object-position: 50% 38%;          /* enfoca un poco hacia arriba */
+  transform: translateY(var(--avatar-shiftY));
+  border-radius: 0;                   /* no recorta las orejas */
+  filter:
+    drop-shadow(0 10px 20px rgba(0,0,0,0.35))
+    drop-shadow(0 0 20px color-mix(in oklab, var(--brand) 30%, transparent));
+}
+
+/* ======
+   Grid
+   ====== */
+.grid { display: grid; gap: 14px; }
+@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* =========
+   Tarjetas
+   ========= */
+.card {
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--surface), black 6%),
+      color-mix(in oklab, var(--surface), black 14%)
+    );
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  border: 1px solid color-mix(in oklab, var(--surface), white 14%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.06) inset,
+    0 12px 28px rgba(0,0,0,.28);
+  display: flex; align-items: center; gap: 12px;
+  position: relative;
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.card:hover, .card:focus-within {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--brand) 40%, transparent);
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--surface), var(--brand) 5%),
+      color-mix(in oklab, var(--surface), black 12%)
+    );
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.08) inset,
+    0 16px 36px rgba(0,0,0,.35);
+}
+
+.card a { 
+  color: inherit; 
+  text-decoration: none; 
+  display: grid; 
+  gap: 2px; flex: 1; }
+.card .name { font-weight: 650; letter-spacing: .2px; }
+.card .desc { color: color-mix(in oklab, var(--muted), white 8%); font-size: 13px; }
+
+/* ======
+   Badge
+   ====== */
+.badge {
+  background: linear-gradient(90deg, var(--brand), color-mix(in oklab, var(--brand), var(--accent-pink) 25%));
+  color: white;
+  padding: 6px 10px; border-radius: 999px; font-weight: 600; font-size: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+}
+
+/* =====
+   Icono
+   ===== */
+.icon {
+  width: 36px; height: 36px; border-radius: 999px;
+  display: grid; place-items: center;
+  background: color-mix(in oklab, var(--brand-contrast), var(--accent-blue) 10%);
+  border: 1px solid color-mix(in oklab, var(--brand-contrast), white 12%);
+}
+
+.icon svg { width: 20px; height: 20px; color: color-mix(in oklab, var(--text), var(--muted) 30%); }
+.card:hover .icon svg { color: var(--text); }
+
+/* ============================
+   Colores personalizados por red
+   ============================ */
+
+/* Fondo de icono en estado normal */
+.card.ig .icon {
+  background: var(--ig-bg);
+  border: 1px solid color-mix(in oklab, var(--ig-bg), black 10%);
+}
+.card.wa .icon {
+  background: var(--wa-bg);
+  border: 1px solid color-mix(in oklab, var(--wa-bg), black 10%);
+}
+.card.fb .icon {
+  background: var(--fb-bg);
+  border: 1px solid color-mix(in oklab, var(--fb-bg), black 10%);
+}
+.card.tk .icon {
+  background: var(--tk-bg);
+  border: 1px solid color-mix(in oklab, var(--tk-bg), black 10%);
+}
+
+/* Hover: brillo sutil del mismo color */
+.card.ig:hover .icon {
+  box-shadow: 0 0 12px color-mix(in oklab, var(--ig-bg), white 30%);
+}
+.card.wa:hover .icon {
+  box-shadow: 0 0 12px color-mix(in oklab, var(--wa-bg), white 30%);
+}
+.card.fb:hover .icon {
+  box-shadow: 0 0 12px color-mix(in oklab, var(--fb-bg), white 30%);
+}
+.card.tk:hover .icon {
+  box-shadow: 0 0 12px color-mix(in oklab, var(--tk-bg), white 30%);
+}
+
+/* Tinte del ícono SVG */
+.card.ig .icon svg { color: #a63b84; }
+.card.wa .icon svg { color: #1f6e3c; }
+.card.fb .icon svg { color: #2a52b0; }
+.card.tk .icon svg { color: #4b2a89; }
+
+/* En hover, ícono blanco brillante */
+.card:hover .icon svg { color: white; }
+
+
+/* ====== Footer ====== */
+.footer {
+  width: 100%;
+  position: relative;  /* Cambié esto de fixed a relative */
+  padding: 16px 0;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;  /* Esto asegura que el footer se quede al fondo */
+}
+
+/* Icono de GitHub */
+.footer a svg {
+  width: 32px;
+  height: 32px;
+  fill: #3e64e7;  /* El color del ícono de GitHub */
+  transition: transform 0.3s ease;
+}
+
+.footer a:hover svg {
+  transform: scale(1.1);  /* Efecto de ampliación al pasar el ratón */
+}
+
+
+
+
+
+
