@@ -4,6 +4,7 @@ import { links } from "./data/links.jsx";
 import { longLinks } from "./data/longLinks.jsx";
 import dogIcon from "./assets/dog-icon.png";
 import Github from "./icons/Github.jsx";
+import Youtube from "./icons/Youtube.jsx";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
 
       <section className="grid" role="list" aria-label="Enlaces principales">
         {links.map((l) => <SocialCard key={l.id} {...l} />)}
+        <SocialCard id="yt" name="YouTube" url="https://www.youtube.com/@MokiLabs" desc="" icon={<Youtube />} />
         {longLinks.map((l) => <LongSocialCard key={l.id} {...l} />)}
       </section>
 

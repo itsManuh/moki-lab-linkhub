@@ -33,6 +33,7 @@ input, button, textarea, select { font: inherit; }
   --wa-bg: #b3f2cb;   /* verde pastel */
   --fb-bg: #a7c8ff;   /* azul rey pastel */
   --tk-bg: #c9b3ff;   /* morado pastel fuerte */
+  --yt-bg: #ffb3b3;   /* rojo pastel */
 
   /* 🐶 Avatar */
   --avatar-size: 148px;     /* tamaño del contenedor */
@@ -242,6 +243,13 @@ body {
   background: var(--tk-bg);
   border: 1px solid color-mix(in oklab, var(--tk-bg), black 10%);
 }
+.card.yt .icon {
+  background: var(--yt-bg);
+  border: 1px solid color-mix(in oklab, var(--yt-bg), black 10%);
+}
+.card.yt {
+  grid-column: 1 / -1;
+}
 
 /* Hover: brillo sutil del mismo color */
 .card.ig:hover .icon {
@@ -256,12 +264,16 @@ body {
 .card.tk:hover .icon {
   box-shadow: 0 0 12px color-mix(in oklab, var(--tk-bg), white 30%);
 }
+.card.yt:hover .icon {
+  box-shadow: 0 0 12px color-mix(in oklab, var(--yt-bg), white 30%);
+}
 
 /* Tinte del ícono SVG */
 .card.ig .icon svg { color: #a63b84; }
 .card.wa .icon svg { color: #1f6e3c; }
 .card.fb .icon svg { color: #2a52b0; }
 .card.tk .icon svg { color: #4b2a89; }
+.card.yt .icon svg { color: #c0392b; }
 
 /* En hover, ícono blanco brillante */
 .card:hover .icon svg { color: white; }
