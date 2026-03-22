@@ -53,6 +53,36 @@ input, button, textarea, select { font: inherit; }
   --brand: #7E56C7;
   --brand-contrast: #F2ECFF;
   --ring: color-mix(in oklab, var(--brand) 55%, transparent);
+  --shadow: 0 4px 16px rgba(126, 86, 199, .08);
+}
+
+/* Tarjetas en modo claro */
+[data-theme="light"] .card {
+  background: #FFFFFF;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.03);
+}
+
+[data-theme="light"] .card:hover,
+[data-theme="light"] .card:focus-within {
+  background: #FFFFFF;
+  border: none;
+  box-shadow: 0 2px 8px rgba(126, 86, 199, .1), 0 8px 24px rgba(0,0,0,.06);
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .long-card {
+  border: none;
+}
+
+[data-theme="light"] .long-card::before {
+  display: none;
+}
+
+[data-theme="light"] .theme-toggle {
+  background: rgba(255,255,255,.9);
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
 }
 
 /* ======
