@@ -45,16 +45,14 @@ input, button, textarea, select { font: inherit; }
 /* ================
    Tokens (Light)
    ================ */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #F7F8FC;
-    --surface: #FFFFFF;
-    --text: #1F1C25;
-    --muted: #6E6A75;
-    --brand: #7E56C7;
-    --brand-contrast: #F2ECFF;
-    --ring: color-mix(in oklab, var(--brand) 55%, transparent);
-  }
+[data-theme="light"] {
+  --bg: #F7F8FC;
+  --surface: #FFFFFF;
+  --text: #1F1C25;
+  --muted: #6E6A75;
+  --brand: #7E56C7;
+  --brand-contrast: #F2ECFF;
+  --ring: color-mix(in oklab, var(--brand) 55%, transparent);
 }
 
 /* ======
@@ -366,11 +364,40 @@ body {
 }
 
 .footer a:hover svg {
-  transform: scale(1.1);  /* Efecto de ampliación al pasar el ratón */
+  transform: scale(1.1);
 }
 
+/* ============================
+   Theme Toggle
+   ============================ */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--surface), white 14%);
+  background: color-mix(in oklab, var(--surface), transparent 20%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
 
+.theme-toggle:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 6px 20px rgba(0,0,0,.3);
+  background: color-mix(in oklab, var(--surface), var(--brand) 10%);
+}
 
-
+.theme-toggle:active {
+  transform: scale(0.95);
+}
 
 
