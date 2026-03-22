@@ -33,6 +33,7 @@ input, button, textarea, select { font: inherit; }
   --wa-bg: #b3f2cb;   /* verde pastel */
   --fb-bg: #a7c8ff;   /* azul rey pastel */
   --tk-bg: #c9b3ff;   /* morado pastel fuerte */
+  --yt-bg: #ffb3b3;   /* rojo pastel */
 
   /* 🐶 Avatar */
   --avatar-size: 148px;     /* tamaño del contenedor */
@@ -44,16 +45,44 @@ input, button, textarea, select { font: inherit; }
 /* ================
    Tokens (Light)
    ================ */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: #F7F8FC;
-    --surface: #FFFFFF;
-    --text: #1F1C25;
-    --muted: #6E6A75;
-    --brand: #7E56C7;
-    --brand-contrast: #F2ECFF;
-    --ring: color-mix(in oklab, var(--brand) 55%, transparent);
-  }
+[data-theme="light"] {
+  --bg: #F7F8FC;
+  --surface: #FFFFFF;
+  --text: #1F1C25;
+  --muted: #6E6A75;
+  --brand: #7E56C7;
+  --brand-contrast: #F2ECFF;
+  --ring: color-mix(in oklab, var(--brand) 55%, transparent);
+  --shadow: 0 4px 16px rgba(126, 86, 199, .08);
+}
+
+/* Tarjetas en modo claro */
+[data-theme="light"] .card {
+  background: #FFFFFF;
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.03);
+}
+
+[data-theme="light"] .card:hover,
+[data-theme="light"] .card:focus-within {
+  background: #FFFFFF;
+  border: none;
+  box-shadow: 0 2px 8px rgba(126, 86, 199, .1), 0 8px 24px rgba(0,0,0,.06);
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .long-card {
+  border: none;
+}
+
+[data-theme="light"] .long-card::before {
+  display: none;
+}
+
+[data-theme="light"] .theme-toggle {
+  background: rgba(255,255,255,.9);
+  border: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
 }
 
 /* ======
@@ -242,6 +271,13 @@ body {
   background: var(--tk-bg);
   border: 1px solid color-mix(in oklab, var(--tk-bg), black 10%);
 }
+.card.yt .icon {
+  background: var(--yt-bg);
+  border: 1px solid color-mix(in oklab, var(--yt-bg), black 10%);
+}
+.card.yt {
+  grid-column: 1 / -1;
+}
 
 /* Hover: brillo sutil del mismo color */
 .card.ig:hover .icon {
@@ -256,12 +292,16 @@ body {
 .card.tk:hover .icon {
   box-shadow: 0 0 12px color-mix(in oklab, var(--tk-bg), white 30%);
 }
+.card.yt:hover .icon {
+  box-shadow: 0 0 12px color-mix(in oklab, var(--yt-bg), white 30%);
+}
 
 /* Tinte del ícono SVG */
 .card.ig .icon svg { color: #a63b84; }
 .card.wa .icon svg { color: #1f6e3c; }
 .card.fb .icon svg { color: #2a52b0; }
 .card.tk .icon svg { color: #4b2a89; }
+.card.yt .icon svg { color: #c0392b; }
 
 /* En hover, ícono blanco brillante */
 .card:hover .icon svg { color: white; }
@@ -354,11 +394,40 @@ body {
 }
 
 .footer a:hover svg {
-  transform: scale(1.1);  /* Efecto de ampliación al pasar el ratón */
+  transform: scale(1.1);
 }
 
+/* ============================
+   Theme Toggle
+   ============================ */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in oklab, var(--surface), white 14%);
+  background: color-mix(in oklab, var(--surface), transparent 20%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
 
+.theme-toggle:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 6px 20px rgba(0,0,0,.3);
+  background: color-mix(in oklab, var(--surface), var(--brand) 10%);
+}
 
-
+.theme-toggle:active {
+  transform: scale(0.95);
+}
 
 
