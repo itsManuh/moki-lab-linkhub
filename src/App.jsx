@@ -1,5 +1,7 @@
 import SocialCard from "./components/SocialCard.jsx";
+import LongSocialCard from "./components/LongSocialCard.jsx";
 import { links } from "./data/links.jsx";
+import { longLinks } from "./data/longLinks.jsx";
 import dogIcon from "./assets/dog-icon.png";
 import Github from "./icons/Github.jsx";
 
@@ -20,11 +22,12 @@ export default function App() {
 
       <section className="grid" role="list" aria-label="Enlaces principales">
         {links.map((l) => <SocialCard key={l.id} {...l} />)}
+        {longLinks.map((l) => <LongSocialCard key={l.id} {...l} />)}
       </section>
 
       <footer className="footer">
         <a href="https://github.com/itsManuh" target="_blank" rel="noopener noreferrer">
-          <Github /> 
+          <Github />
         </a>
       </footer>
 
