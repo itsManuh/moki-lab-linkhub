@@ -1,7 +1,7 @@
 /* Reset mínimo */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
-html, body, #root { height: 100%; }
+html, body, #root { min-height: 100%; }
 body { line-height: 1.5; -webkit-font-smoothing: antialiased; }
 img, picture, video, canvas, svg { display: block; max-width: 100%; }
 input, button, textarea, select { font: inherit; }
@@ -65,14 +65,15 @@ body {
     radial-gradient(720px 380px at 20% -10%, color-mix(in oklab, var(--accent-pink) 18%, transparent) 0%, transparent 70%),
     radial-gradient(820px 460px at 80% -10%, color-mix(in oklab, var(--accent-blue) 22%, transparent) 0%, transparent 70%),
     var(--bg);
+  background-attachment: fixed;
   color: var(--text);
   display: flex;
-  flex-direction: column;  /* Los elementos se apilan verticalmente */
-  justify-content: flex-start;  /* Asegura que el contenido se alinee desde el inicio */
-  height: 100vh;  /* Ocupa todo el alto de la pantalla */
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
   padding: 32px;
   margin: 0;
-  align-items: center;  /* Centra todo horizontalmente */
+  align-items: center;
 }
 
 .container {
@@ -264,6 +265,72 @@ body {
 
 /* En hover, ícono blanco brillante */
 .card:hover .icon svg { color: white; }
+
+/* ================================
+   Long Card (abarca 2 columnas)
+   ================================ */
+.long-card {
+  grid-column: 1 / -1;
+  justify-content: center;
+  padding: 18px 24px;
+  border-image: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--brand) 50%, transparent),
+    color-mix(in oklab, var(--accent-pink) 40%, transparent),
+    color-mix(in oklab, var(--brand) 50%, transparent)
+  ) 1;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--radius);
+
+  /* Hack para border-radius + border-image */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Borde con gradiente + border-radius (pseudo-elemento) */
+.long-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  padding: 1px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--brand) 45%, transparent),
+    color-mix(in oklab, var(--accent-pink) 35%, transparent),
+    color-mix(in oklab, var(--brand) 45%, transparent)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Eliminar el border-image nativo para que no interfiera */
+.long-card {
+  border-image: none;
+  border-color: transparent;
+}
+
+.long-card:hover,
+.long-card:focus-within {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.08) inset,
+    0 16px 36px rgba(0,0,0,.35),
+    0 0 20px color-mix(in oklab, var(--brand) 20%, transparent);
+}
+
+.long-card .name {
+  font-size: 16px;
+}
 
 
 /* ====== Footer ====== */
